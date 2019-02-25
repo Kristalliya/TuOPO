@@ -88,15 +88,5 @@
       <property name="bounds" value="260,340,144,64" />
       <property name="location_set_by_user" value="True" />
     </reference>
-    <reference referencedUin="delphi:e_class:src:Project1:AccessAdapterUnit.Adapter">
-      <property name="$shortcutReference" value="true" />
-      <property name="bounds" value="240,480,172,81" />
-      <property name="location_set_by_user" value="True" />
-      <reference referencedUin="delphi:l_impl:src:Project1:AccessAdapterUnit.Adapter:AdaptersUnit.Adapters">
-        <property name="sourceAnchor" value="332,480" />
-        <property name="targetAnchor" value="332,404" />
-        <property name="bendpoints" value="" />
-      </reference>
-    </reference>
   </view>
 </nodeSet>

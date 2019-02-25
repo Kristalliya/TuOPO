@@ -5,7 +5,7 @@ interface
 uses AdaptersUnit;
 
 type
-  Adapter = class(TInterfacedObject, Adapters)
+  AccessAdapter = class(TInterfacedObject, Adapters)
   end;
 implementation
 
