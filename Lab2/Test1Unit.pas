@@ -11,6 +11,7 @@ uses
 type
   Test1 = class(TInterfacedObject, Tests)
   private
+    /// <link>association</link>
     Adapter: Adapters;
   public
     procedure setTest(caption: string);

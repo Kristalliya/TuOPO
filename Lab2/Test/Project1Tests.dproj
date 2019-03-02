@@ -82,8 +82,17 @@
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="TestPhisicsControllerUnit.pas"/>
-			<DCCReference Include="..\PhisicsControllerUnit.pas"/>
+			<DCCReference Include="..\AccessAdapterUnit.pas"/>
+			<DCCReference Include="..\AdaptersUnit.pas"/>
 			<DCCReference Include="..\ControllersUnit.pas"/>
+			<DCCReference Include="..\MainUnit.pas"/>
+			<DCCReference Include="..\MenuUnit.pas"/>
+			<DCCReference Include="..\PhisicsControllerUnit.pas"/>
+			<DCCReference Include="..\Test1Unit.pas"/>
+			<DCCReference Include="..\TestsUnit.pas"/>
+			<DCCReference Include="TestTest1Unit.pas"/>
+			<DCCReference Include="TestMenuUnit.pas"/>
+			<None Include="ModelSupport_Project1Tests\default.txaPackage"/>
 			<BuildConfiguration Include="Release">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>
@@ -141,7 +150,9 @@
 					<TestFramework>DUnit / Delphi Win32</TestFramework>
 					<TestRunner>GUI</TestRunner>
 					<SourceProjectName>E:\Учеба Now\4 курс 2 ч 2019-2020 Последний семестр\Ахматшин ТиОПО (Тестирование и отладка ПО)\TestAndOthers\Project1.dproj</SourceProjectName>
+					<TestProjectName/>
 				</UnitTesting>
+				<ModelSupport>True</ModelSupport>
 			</BorlandProject>
 			<ProjectFileVersion>12</ProjectFileVersion>
 		</ProjectExtensions>

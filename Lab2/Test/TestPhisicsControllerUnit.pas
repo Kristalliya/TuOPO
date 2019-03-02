@@ -13,7 +13,8 @@ interface
 
 uses
   TestFramework, PhisicsControllerUnit, System.Generics.Collections,
-  ControllersUnit;
+  ControllersUnit,
+  MenuUnit, MainUnit, Test1Unit, TestsUnit;
 
 type
   // Test methods for class PhisicsController
@@ -27,49 +28,53 @@ type
     procedure TearDown; override;
   published
     procedure TestgetMenu;
-    procedure TestCheckEqualsMenu;
-    procedure TestFailEqualsMenu;
-    procedure TestCheckSameMenu;
+    procedure TestGetListAnswer;
+    procedure getQuestCaption;
+    procedure TestSetTest;
   end;
 
 implementation
 
+procedure TestPhisicsController.getQuestCaption;
+var
+  ReturnValue:TList<string>;
+begin
+  FPhisicsController.SetTest('Движение с постоянным ускорением');
+  ReturnValue:=FPhisicsController.getQuest;
+  CheckEquals(ReturnValue.First,'Дайте определение материальной точки.');
+  CheckNotEquals(ReturnValue.First, ' ');
+end;
+
 procedure TestPhisicsController.SetUp;
 begin
   FPhisicsController := PhisicsController.Create;
+//  FPhisicsController.SetTest('Движение с постоянным ускорением');
 end;
 
 procedure TestPhisicsController.TearDown;
 begin
 //  FPhisicsController.Free;   было
   FPhisicsController := nil;
+
 end;
 
-procedure TestPhisicsController.TestCheckEqualsMenu;
+procedure TestPhisicsController.TestGetListAnswer;
 var
-  ReturnValue: TList<String>;
+  ReturnValue:TList<string>;
+  ReturnValue2:TList<string>;
+  Count:integer;
 begin
-  ReturnValue:=TList<String>.Create;
-  ReturnValue := FPhisicsController.getMenu;
-  CheckEquals(ReturnValue.First,'Test1');
-end;
-
-procedure TestPhisicsController.TestCheckSameMenu;
-var
-  ReturnValue: TList<String>;
-begin
-  ReturnValue:=TList<String>.Create;
-  ReturnValue := FPhisicsController.getMenu;
-  CheckEquals(ReturnValue.items[0],ReturnValue.items[1]);  //expected: <Test1> but was: <Test2>
-end;
-
-procedure TestPhisicsController.TestFailEqualsMenu;
-var
-  ReturnValue: TList<String>;
-begin
-  ReturnValue:=TList<String>.Create;
-  ReturnValue := FPhisicsController.getMenu;
-  FailEquals(ReturnValue.Last,'Test1');        //expected and actual were: <Test2>
+  FPhisicsController.SetTest('Движение с постоянным ускорением');
+  ReturnValue2:=FPhisicsController.getQuest;
+  ReturnValue:=FPhisicsController.getAnswer;
+  CheckEquals(ReturnValue.Items[0],'абстрактный объект (модель), не имеющий размеров, но обладающий другими характеристиками');
+  CheckNotEquals(ReturnValue.Items[0],'aaaaaaa');
+  CheckEquals(ReturnValue.Items[1],'это координата, которую имеет МТ в данный момент времени');
+  CheckNotEquals(ReturnValue.Items[1],'nnnn');
+  CheckEquals(ReturnValue.Count,10);
+  CheckNotEquals(ReturnValue.Count,11);
+  CheckEquals(ReturnValue2.Count,23);
+  CheckNotEquals(ReturnValue2.Count,24);
 end;
 
 procedure TestPhisicsController.TestgetMenu;
@@ -77,7 +82,29 @@ var
   ReturnValue: TList<String>;
 begin
   ReturnValue := FPhisicsController.getMenu;
+  CheckEquals(ReturnValue.First, ReturnValue.Last);
+ // CheckEquals(ReturnValue.Items[0],'Test2');
+  CheckEquals(ReturnValue.Items[0],'Движение с постоянным ускорением');
+  CheckEquals(ReturnValue.Count,1);
   // TODO: Validate method results
+end;
+
+procedure TestPhisicsController.TestSetTest;
+var
+  ReturnValue:TList<String>;
+  ReturnValue2:TList<string>;
+  Caption:string;
+begin
+  FPhisicsController.setTest('Движение с постоянным ускорением');
+  caption:='Движение с постоянным ускорением';
+  FPhisicsController.setTest(caption);
+  ReturnValue:=FPhisicsController.getQuest;
+  CheckEquals(ReturnValue.Items[0],'Дайте определение материальной точки.');
+  CheckNotEquals(ReturnValue.Items[0],'Как определяется положение материальной точки?');
+  ReturnValue2:=FPhisicsController.getQuest;
+  CheckEquals(ReturnValue2.Items[0],'Дайте определение материальной точки.');
+  CheckNotEquals(ReturnValue2.Items[0],'Как определяется положение материальной точки?');
+  CheckNotEquals(ReturnValue.Items[0],ReturnValue2.Items[1]);
 end;
 
 initialization
