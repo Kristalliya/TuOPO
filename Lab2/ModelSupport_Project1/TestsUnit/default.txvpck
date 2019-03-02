@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <nodeSet version="1.0">
-  <view uin="3ibaopy7lxj_v">
+  <view uin="hjp5p1o0de52xamim_v">
     <property name="$defaultDiagram" value="true" />
     <property name="$metaclass" value="Package Diagram" />
     <property name="$name" value="default" />
-    <reference referencedUin="delphi:e_class:src:Project1:Project1.@unitclass">
-      <property name="$shortcutReference" value="true" />
-    </reference>
   </view>
 </nodeSet>

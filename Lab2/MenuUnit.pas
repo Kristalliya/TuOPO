@@ -10,7 +10,7 @@ type
   Menu = class(TInterfacedObject, Main)
   private
     /// <link>aggregation</link>
-    Adapter1: adapters;
+    Adapter1: Adapters;
     function getMenu: TList<string>;
   end;
 
@@ -22,7 +22,7 @@ function Menu.getMenu: TList<string>;
 begin
   result := TList<String>.Create;
   Adapter1 := AccessAdapter.Create;
-  result :=;
+  result := Adapter1.getMenu;
 end;
 
 end.

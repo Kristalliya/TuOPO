@@ -14,4 +14,12 @@ object Form1: TForm1
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
+  object Button1: TButton
+    Left = 144
+    Top = 112
+    Width = 75
+    Height = 25
+    Caption = 'Button1'
+    TabOrder = 0
+  end
 end

@@ -92,6 +92,8 @@
 			<DCCReference Include="MainUnit.pas"/>
 			<DCCReference Include="AdaptersUnit.pas"/>
 			<DCCReference Include="AccessAdapterUnit.pas"/>
+			<DCCReference Include="TestsUnit.pas"/>
+			<DCCReference Include="Test1Unit.pas"/>
 			<None Include="ModelSupport_Project1\default.txaPackage"/>
 			<None Include="ModelSupport_Project1\default.txvpck"/>
 			<None Include="ModelSupport_Project1\Unit1\default.txvpck"/>
@@ -110,6 +112,10 @@
 			<None Include="ModelSupport_Project1\AdaptersUnit\default.txvpck"/>
 			<None Include="ModelSupport_Project1\AccessAdapterUnit\default.txaPackage"/>
 			<None Include="ModelSupport_Project1\AccessAdapterUnit\default.txvpck"/>
+			<None Include="ModelSupport_Project1\TestsUnit\default.txaPackage"/>
+			<None Include="ModelSupport_Project1\TestsUnit\default.txvpck"/>
+			<None Include="ModelSupport_Project1\Test1Unit\default.txaPackage"/>
+			<None Include="ModelSupport_Project1\Test1Unit\default.txvpck"/>
 			<BuildConfiguration Include="Release">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>
