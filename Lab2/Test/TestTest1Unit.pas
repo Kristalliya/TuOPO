@@ -59,24 +59,42 @@ procedure TestTest1.TestgetQuest;
 var
   ReturnValue: TList<string>;
 begin
+  Fest1.SetTest('Движение с постоянным ускорением');
   ReturnValue := Fest1.getQuest;
-  CheckEquals(returnValue.Items[0],'aaa');
+  CheckNotEquals(returnValue.Items[0],'aaa');
+  CheckEquals(ReturnValue.First,'Дайте определение материальной точки.');
+  CheckNotEquals(ReturnValue.First, ' ');
   // TODO: Validate method results
 end;
 
 procedure TestTest1.TestgetAnswer;
 var
-  ReturnValue: TList<string>;
+  ReturnValue1: TList<string>;
+  ReturnValue2: TList<string>;
 begin
-  ReturnValue := Fest1.getAnswer;
-  CheckEquals(returnValue.Items[0],'aaa');
+  Fest1.SetTest('Движение с постоянным ускорением');
+  ReturnValue1:= Fest1.getQuest;
+  ReturnValue2 := Fest1.getAnswer;
+  CheckNotEquals(returnValue1.Items[0],'aaa');
+  CheckEquals(ReturnValue2.Items[0],'абстрактный объект (модель), не имеющий размеров, но обладающий другими характеристиками');
+  CheckEquals(ReturnValue2.Items[1],'это координата, которую имеет МТ в данный момент времени');
+  CheckNotEquals(ReturnValue1.Items[1],'nnnn');
+  CheckEquals(ReturnValue1.Count,23);
+  CheckNotEquals(ReturnValue1.Count,24);
+  CheckEquals(ReturnValue2.Count,10);
+  CheckNotEquals(ReturnValue2.Count,11);
   // TODO: Validate method results
 end;
 
 procedure TestTest1.TestgetCorrect;
 var
   ReturnValue: TDictionary<integer,integer>;
+  ReturnValue1: TList<string>;
+  ReturnValue2: TList<string>;
 begin
+  Fest1.SetTest('Движение с постоянным ускорением');
+  ReturnValue1:= Fest1.getQuest;
+  ReturnValue2 := Fest1.getAnswer;
   ReturnValue := Fest1.getCorrect;
   // TODO: Validate method results
 end;
