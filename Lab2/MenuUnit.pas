@@ -11,6 +11,7 @@ type
   private
     /// <link>aggregation</link>
     Adapter1: Adapters;
+  public
     function getMenu: TList<string>;
   end;
 

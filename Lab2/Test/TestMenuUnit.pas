@@ -24,6 +24,7 @@ type
   public
     procedure SetUp; override;
     procedure TearDown; override;
+    procedure TestgetMenu;
   end;
 
 implementation
@@ -37,6 +38,17 @@ procedure TestMenu.TearDown;
 begin
   FMenu.Free;
   FMenu := nil;
+end;
+
+procedure TestMenu.TestgetMenu;
+var
+  ReturnValue: TList<string>;
+begin
+  ReturnValue := FMenu.getMenu;
+  CheckEquals(ReturnValue.First, ReturnValue.Last);
+  CheckEquals(ReturnValue.Items[0],'Движение с постоянным ускорением');
+  CheckEquals(ReturnValue.Count,1);
+  // TODO: Validate method results
 end;
 
 initialization
