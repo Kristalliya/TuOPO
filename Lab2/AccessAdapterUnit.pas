@@ -16,6 +16,8 @@ type
     ADOConnection: TADOConnection;
     function getAnswerTableName: string;
     function getAnswerTable(answer:string):TList<string>;
+    function getQuestTableName:string;
+    function getQuestTable(quest:string):TList<string>;
     function getMenu: TList<string>;
     procedure setTest(Caption: string);
     function getQuest: TList<string>;
@@ -48,34 +50,6 @@ var
   ADOQuery: TADOQuery;
   answer: string;
 begin
-  { result := TList<string>.create;
-    ADOQuery := TADOQuery.create(nil);
-    with (ADOQuery) do
-    begin
-    Connection := ADOConnection;
-    Close;
-    SQL.Clear;
-    SQL.add('SELECT answer FROM Main WHERE caption="' + Self.Caption + '";');
-    Open;
-    Active := true;
-    end;
-    ADOQuery.First;
-    result := ADOQuery.FieldByName('answer').AsString;
-
-   with (ADOQuery) do
-    begin
-    Close;
-    SQL.Clear;
-    SQL.add('SELECT caption FROM ' + answer + ';');
-    Open;
-    Active := true;
-    end;
-    while not ADOQuery.Eof do
-    begin
-    result.add(ADOQuery.FieldByName('caption').AsString);
-    ADOQuery.Next;
-    end;
-    ADOQuery.Free; }
     answer:=getAnswerTableName;
     result:=getAnswerTable(answer);
 end;
@@ -127,7 +101,6 @@ var
   ADOQuery: TADOQuery;
   Correct: string;
 begin
-
   result := TDictionary<integer, integer>.create;
   ADOQuery := TADOQuery.create(nil);
   with (ADOQuery) do
@@ -141,6 +114,7 @@ begin
   end;
   ADOQuery.First;
   Correct := ADOQuery.FieldByName('correct').AsString;
+
   with (ADOQuery) do
   begin
     Close;
@@ -157,7 +131,6 @@ begin
     ADOQuery.Next;
   end;
   ADOQuery.Free;
-
 end;
 
 function AccessAdapter.getMenu: TList<string>;
@@ -190,21 +163,20 @@ var
   ADOQuery: TADOQuery;
   quest: string;
 begin
+  quest:=getAnswerTableName;
+  result:=getAnswerTable(quest);
+
+end;
+
+function AccessAdapter.getQuestTable(quest: string): TList<string>;
+var
+  ADOQuery: TADOQuery;
+begin
   result := TList<string>.create;
   ADOQuery := TADOQuery.create(nil);
   with (ADOQuery) do
   begin
     Connection := ADOConnection;
-    Close;
-    SQL.Clear;
-    SQL.add('SELECT quest FROM Main WHERE caption="' + Self.Caption + '";');
-    Open;
-    Active := true;
-  end;
-  ADOQuery.First;
-  quest := ADOQuery.FieldByName('quest').AsString;
-  with (ADOQuery) do
-  begin
     Close;
     SQL.Clear;
     SQL.add('SELECT caption FROM ' + quest + ';');
@@ -217,6 +189,25 @@ begin
     result.add(ADOQuery.FieldByName('caption').AsString);
     ADOQuery.Next;
   end;
+  ADOQuery.Free;
+end;
+
+function AccessAdapter.getQuestTableName: string;
+var
+  ADOQuery: TADOQuery;
+begin
+  ADOQuery := TADOQuery.create(nil);
+  with (ADOQuery) do
+  begin
+    Connection := ADOConnection;
+    Close;
+    SQL.Clear;
+    SQL.add('SELECT quest FROM Main WHERE caption="' + Self.Caption + '";');
+    Open;
+    Active := true;
+  end;
+  ADOQuery.First;
+  result := ADOQuery.FieldByName('quest').AsString;
   ADOQuery.Free;
 end;
 
