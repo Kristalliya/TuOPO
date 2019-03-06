@@ -18,6 +18,8 @@ type
     function getAnswerTable(answer:string):TList<string>;
     function getQuestTableName:string;
     function getQuestTable(quest:string):TList<string>;
+    function getCorrectTableName:string;
+    function getCorrectTable (correct:string):TDictionary<integer,integer>;
     function getMenu: TList<string>;
     procedure setTest(Caption: string);
     function getQuest: TList<string>;
@@ -98,10 +100,42 @@ end;
 
 function AccessAdapter.getCorrect: TDictionary<integer, integer>;
 var
-  ADOQuery: TADOQuery;
-  Correct: string;
+  correct: string;
+begin
+  correct:=getCorrectTableName;
+  result:=getCorrectTable(correct);
+end;
+
+function AccessAdapter.getCorrectTable(
+  correct: string): TDictionary<integer, integer>;
+var
+  ADOQuery:TADOQuery;
 begin
   result := TDictionary<integer, integer>.create;
+  ADOQuery := TADOQuery.create(nil);
+  with (ADOQuery) do
+  begin
+    Connection := ADOConnection;
+    Close;
+    SQL.Clear;
+    SQL.add('SELECT quest_id, answer_id FROM ' + correct + ';');
+    Open;
+    Active := true;
+  end;
+//  ADOQuery.First;
+  while not ADOQuery.Eof do
+  begin
+    result.add(StrToInt(ADOQuery.FieldByName('quest_id').AsString),
+      StrToInt(ADOQuery.FieldByName('answer_id').AsString));
+    ADOQuery.Next;
+  end;
+  ADOQuery.Free;
+end;
+
+function AccessAdapter.getCorrectTableName: string;
+var
+  ADOQuery:TADOQuery;
+begin
   ADOQuery := TADOQuery.create(nil);
   with (ADOQuery) do
   begin
@@ -113,23 +147,7 @@ begin
     Active := true;
   end;
   ADOQuery.First;
-  Correct := ADOQuery.FieldByName('correct').AsString;
-
-  with (ADOQuery) do
-  begin
-    Close;
-    SQL.Clear;
-    SQL.add('SELECT quest_id, answer_id FROM ' + Correct + ';');
-    Open;
-    Active := true;
-  end;
-  ADOQuery.First;
-  while not ADOQuery.Eof do
-  begin
-    result.add(StrToInt(ADOQuery.FieldByName('quest_id').AsString),
-      StrToInt(ADOQuery.FieldByName('answer_id').AsString));
-    ADOQuery.Next;
-  end;
+  result := ADOQuery.FieldByName('correct').AsString;
   ADOQuery.Free;
 end;
 
