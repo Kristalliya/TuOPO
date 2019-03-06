@@ -3,9 +3,9 @@ unit AccessAdapterUnit;
 interface
 
 uses
-  SysUtils {StrToInt},
-  Data.DB {TDataSource},
-  Data.Win.ADODB {TADOQuery},
+  SysUtils {StrToInt} ,
+  Data.DB {TDataSource} ,
+  Data.Win.ADODB {TADOQuery} ,
   System.Generics.Collections {TDictionary} ,
   AdaptersUnit;
 
@@ -14,8 +14,10 @@ type
   private
     Caption: string;
     ADOConnection: TADOConnection;
+    function getAnswerTableName: string;
+    function getAnswerTable(answer:string):TList<string>;
     function getMenu: TList<string>;
-    procedure setTest(caption: string);
+    procedure setTest(Caption: string);
     function getQuest: TList<string>;
     function getAnswer: TList<String>;
     function getCorrect: TDictionary<integer, integer>;
@@ -46,21 +48,47 @@ var
   ADOQuery: TADOQuery;
   answer: string;
 begin
-  result := TList<string>.create;
-  ADOQuery := TADOQuery.create(nil);
-  with (ADOQuery) do
-  begin
+  { result := TList<string>.create;
+    ADOQuery := TADOQuery.create(nil);
+    with (ADOQuery) do
+    begin
     Connection := ADOConnection;
     Close;
     SQL.Clear;
     SQL.add('SELECT answer FROM Main WHERE caption="' + Self.Caption + '";');
     Open;
     Active := true;
-  end;
-  ADOQuery.First;
-  answer := ADOQuery.FieldByName('answer').AsString;
+    end;
+    ADOQuery.First;
+    result := ADOQuery.FieldByName('answer').AsString;
+
+   with (ADOQuery) do
+    begin
+    Close;
+    SQL.Clear;
+    SQL.add('SELECT caption FROM ' + answer + ';');
+    Open;
+    Active := true;
+    end;
+    while not ADOQuery.Eof do
+    begin
+    result.add(ADOQuery.FieldByName('caption').AsString);
+    ADOQuery.Next;
+    end;
+    ADOQuery.Free; }
+    answer:=getAnswerTableName;
+    result:=getAnswerTable(answer);
+end;
+
+function AccessAdapter.getAnswerTable(answer:string):TList<string>;
+var
+  ADOQuery: TADOQuery;
+begin
+  result := TList<string>.create;
+  ADOQuery := TADOQuery.create(nil);
   with (ADOQuery) do
   begin
+    Connection := ADOConnection;
     Close;
     SQL.Clear;
     SQL.add('SELECT caption FROM ' + answer + ';');
@@ -75,11 +103,31 @@ begin
   ADOQuery.Free;
 end;
 
+function AccessAdapter.getAnswerTableName: string;
+var
+  ADOQuery: TADOQuery;
+begin
+  ADOQuery := TADOQuery.create(nil);
+  with (ADOQuery) do
+  begin
+    Connection := ADOConnection;
+    Close;
+    SQL.Clear;
+    SQL.add('SELECT answer FROM Main WHERE caption="' + Self.Caption + '";');
+    Open;
+    Active := true;
+  end;
+  ADOQuery.First;
+  result := ADOQuery.FieldByName('answer').AsString;
+  ADOQuery.Free;
+end;
+
 function AccessAdapter.getCorrect: TDictionary<integer, integer>;
 var
   ADOQuery: TADOQuery;
   Correct: string;
 begin
+
   result := TDictionary<integer, integer>.create;
   ADOQuery := TADOQuery.create(nil);
   with (ADOQuery) do
@@ -87,7 +135,7 @@ begin
     Connection := ADOConnection;
     Close;
     SQL.Clear;
-    SQL.add('SELECT correct FROM Main WHERE caption="' + Self.caption + '";');
+    SQL.add('SELECT correct FROM Main WHERE caption="' + Self.Caption + '";');
     Open;
     Active := true;
   end;
@@ -97,7 +145,7 @@ begin
   begin
     Close;
     SQL.Clear;
-    SQL.add('SELECT quest_id, answer_id FROM ' + correct + ';');
+    SQL.add('SELECT quest_id, answer_id FROM ' + Correct + ';');
     Open;
     Active := true;
   end;
@@ -174,7 +222,7 @@ end;
 
 procedure AccessAdapter.setTest(Caption: string);
 begin
-  Self.caption := caption;
+  Self.Caption := Caption;
 end;
 
 end.
